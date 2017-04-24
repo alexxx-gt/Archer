@@ -50,12 +50,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AllHandlerTests.cs" />
-    <Compile Include="CppHandlerTests.cs" />
     <Compile Include="HandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reversed1HandlerTests.cs" />
-    <Compile Include="Reversed2HandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Archer\Archer.csproj">

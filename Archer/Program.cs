@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Archer
@@ -10,6 +11,13 @@ namespace Archer
     class Program
     {
         static void Main(string[] args)
+        {
+
+            MainAsync(args).Wait();
+            //Console.ReadLine();
+        }
+
+        static async Task MainAsync(string[] args)
         {
             int numberOfCommandLineArguments = args.Length;
 
@@ -35,7 +43,7 @@ namespace Archer
                     }
                 default:
                     {
-                        all.HandleRequest(args);
+                        await all.HandleRequest(args);
                         break;
                     }
             }
@@ -44,7 +52,7 @@ namespace Archer
 
     interface IHandler
     {
-        void HandleRequest(string[] arguments);
+        Task HandleRequest(string[] arguments);
     }
 
     public abstract class Handler : IHandler
@@ -53,15 +61,18 @@ namespace Archer
 
         public List<string> fileNamesList = new List<string>();
         public Handler Successor { get; set; }
-        public virtual void HandleRequest(string[] arguments)
+        public async virtual Task HandleRequest(string[] arguments)
         {
-            if (arguments.Length > 3)
+            if (arguments.Length == 3)
             {
-                WriteToFile(arguments[0], arguments[2]);
+                Console.WriteLine(arguments.Length);
+                await WriteToFile(arguments[0], arguments[2]);
+
             }
             else
             {
-                WriteToFile(arguments[0]);
+                Console.WriteLine(arguments.Length);
+                await WriteToFile(arguments[0]);
             }
         }
 
@@ -99,9 +110,9 @@ namespace Archer
             {
                 foreach (DirectoryInfo item in subfolders)
                 {
-                    await Task.Run(() =>
+                    await Task.Run(async () =>
                     {
-                        GetSubdirectoryFiles(item.FullName, filter);
+                        await GetSubdirectoryFiles(item.FullName, filter);
                     });
                 }
             }
@@ -113,11 +124,19 @@ namespace Archer
                     fileNamesList.Add(item.FullName);
                 }
             }
+
         }
 
-        public async void WriteToFile(string directory, string resultFileName = DEFAULT_RESULTS_FILE_NAME)
+        public async Task WriteToFile(string directory, string resultFileName = DEFAULT_RESULTS_FILE_NAME)
         {
-            using (StreamWriter writer = new StreamWriter(directory + "\\" + resultFileName))
+            string path = directory + "\\" + resultFileName;
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            using (StreamWriter writer = new StreamWriter(path))
             {
                 foreach (string item in fileNamesList)
                 {
@@ -141,43 +160,43 @@ namespace Archer
     public class AllHandler : Handler
     {
 
-        public async override void HandleRequest(string[] arguments)
+        public async override Task HandleRequest(string[] arguments)
         {
             if (arguments[1] == "all")
             {
                 await GetSubdirectoryFiles(arguments[0]);
                 RemoveInitialFolderName(arguments[0]);
 
-                base.HandleRequest(arguments);
+                await base.HandleRequest(arguments);
             }
             else
             {
-                Successor.HandleRequest(arguments);
+                await Successor.HandleRequest(arguments);
             }
         }
     }
 
     public class CppHandler : Handler
     {
-        public async override void HandleRequest(string[] arguments)
+        public async override Task HandleRequest(string[] arguments)
         {
             if (arguments[1] == "cpp")
             {
                 await GetSubdirectoryFiles(arguments[0], ".cpp");
                 RemoveInitialFolderName(arguments[0]);
 
-                base.HandleRequest(arguments);
+                await base.HandleRequest(arguments);
             }
             else
             {
-                Successor.HandleRequest(arguments);
+                await Successor.HandleRequest(arguments);
             }
         }
     }
 
     public class Reversed1Handler : Handler
     {
-        public async override void HandleRequest(string[] arguments)
+        public async override Task HandleRequest(string[] arguments)
         {
             if (arguments[1] == "reverse1")
             {
@@ -192,18 +211,18 @@ namespace Archer
                     fileNamesList.Insert(i, element);
                 }
 
-                base.HandleRequest(arguments);
+                await base.HandleRequest(arguments);
             }
             else
             {
-                Successor.HandleRequest(arguments);
+                await Successor.HandleRequest(arguments);
             }
         }
     }
 
     public class Reversed2Handler : Handler
     {
-        public async override void HandleRequest(string[] arguments)
+        public async override Task HandleRequest(string[] arguments)
         {
             if (arguments[1] == "reverse2")
             {
@@ -218,11 +237,11 @@ namespace Archer
                     fileNamesList.Insert(i, element);
                 }
 
-                base.HandleRequest(arguments);
+                await base.HandleRequest(arguments);
             }
             else
             {
-                Successor.HandleRequest(arguments);
+                await Successor.HandleRequest(arguments);
             }
         }
     }
