@@ -64,14 +64,11 @@ namespace Archer
         public async virtual Task HandleRequest(string[] arguments)
         {
             if (arguments.Length == 3)
-            {
-                Console.WriteLine(arguments.Length);
+            {                
                 await WriteToFile(arguments[0], arguments[2]);
-
             }
             else
             {
-                Console.WriteLine(arguments.Length);
                 await WriteToFile(arguments[0]);
             }
         }
@@ -184,6 +181,14 @@ namespace Archer
             {
                 await GetSubdirectoryFiles(arguments[0], ".cpp");
                 RemoveInitialFolderName(arguments[0]);
+
+                for (int i = 0; i < fileNamesList.Count; i++)
+                {
+                    string element = fileNamesList.ElementAt(i);
+                    element = element + " /";
+                    fileNamesList.RemoveAt(i);
+                    fileNamesList.Insert(i, element);
+                }
 
                 await base.HandleRequest(arguments);
             }
