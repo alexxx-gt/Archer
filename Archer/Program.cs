@@ -13,8 +13,7 @@ namespace Archer
         static void Main(string[] args)
         {
 
-            MainAsync(args).Wait();
-            //Console.ReadLine();
+            MainAsync(args).Wait();            
         }
 
         static async Task MainAsync(string[] args)
