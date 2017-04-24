@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archer", "Archer\Archer.csproj", "{B90CD548-46B4-47B7-A894-9427E80B67E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcherTest", "ArcherTest\ArcherTest.csproj", "{125EE524-E690-40C3-8E51-5EA23026EFE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B90CD548-46B4-47B7-A894-9427E80B67E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B90CD548-46B4-47B7-A894-9427E80B67E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B90CD548-46B4-47B7-A894-9427E80B67E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B90CD548-46B4-47B7-A894-9427E80B67E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{125EE524-E690-40C3-8E51-5EA23026EFE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{125EE524-E690-40C3-8E51-5EA23026EFE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{125EE524-E690-40C3-8E51-5EA23026EFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{125EE524-E690-40C3-8E51-5EA23026EFE9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
